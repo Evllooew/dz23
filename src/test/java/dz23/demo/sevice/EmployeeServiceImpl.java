@@ -7,12 +7,14 @@ import dz23.demo.exceptions.NotValidCharacterException;
 import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final Map<String, Employee> employeeMap;
-    private static final int MAX_EMPLOYEES = 10;
+    public static final int MAX_EMPLOYEES = 3;
 
     public EmployeeServiceImpl() {
         this.employeeMap = new HashMap<>();
@@ -26,13 +28,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee addEmployee(String name, String surname, int salary, int department) {
         isCorrectInput(name, surname);
+
+        if (employeeMap.size() >= MAX_EMPLOYEES) {
+            throw new MaximumEmployeesException("Максимальное количество сотрудников");
+        }
         Employee employee = new Employee(name, surname, salary, department);
         if (!employeeMap.containsKey(employee.getName() + employee.getSurname())) {
             employeeMap.put(employee.getName() + employee.getSurname(), employee);
             return employee;
-        } else if (employeeMap.size() > MAX_EMPLOYEES) {
-            throw new MaximumEmployeesException("Максимальное количество сотрудников");
         }
+
         throw new EmployeeAlreadyAddedException("Такой сотрудник уже существует");
     }
 
