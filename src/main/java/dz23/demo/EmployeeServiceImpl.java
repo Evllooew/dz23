@@ -1,9 +1,11 @@
-package dz23.demo.sevice;
+package dz23.demo;
 
 import dz23.demo.exceptions.EmployeeAlreadyAddedException;
 import dz23.demo.exceptions.EmployeeNotFoundException;
 import dz23.demo.exceptions.MaximumEmployeesException;
 import dz23.demo.exceptions.NotValidCharacterException;
+import dz23.demo.sevice.Employee;
+import dz23.demo.sevice.EmployeeService;
 import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.stereotype.Service;
 
